@@ -14,6 +14,10 @@ const tabStyle = {
   transition: 'all 0.2s ease'
 }
 
+const normalizeEmail = (value = '') => value.trim().toLowerCase()
+
+const isValidEmail = (value = '') => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizeEmail(value))
+
 const translateAuthMessage = (message = '') => {
   const normalized = message.toLowerCase()
 
@@ -45,7 +49,7 @@ export default function AuthCard({ initialTab = 'login' }) {
 
     const savedEmail = window.localStorage.getItem('auth-email') || ''
     const savedRemember = window.localStorage.getItem('auth-remember') === 'true'
-    setEmail(savedEmail)
+    setEmail(normalizeEmail(savedEmail))
     setRemember(savedRemember)
   }, [])
 
@@ -57,8 +61,10 @@ export default function AuthCard({ initialTab = 'login' }) {
   const saveRememberChoice = (value) => {
     if (typeof window === 'undefined') return
 
+    const normalizedEmail = normalizeEmail(email)
+
     if (value) {
-      window.localStorage.setItem('auth-email', email)
+      window.localStorage.setItem('auth-email', normalizedEmail)
       window.localStorage.setItem('auth-remember', 'true')
     } else {
       window.localStorage.removeItem('auth-email')
@@ -71,7 +77,16 @@ export default function AuthCard({ initialTab = 'login' }) {
     setLoading(true)
     setMessage('')
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const normalizedEmail = normalizeEmail(email)
+
+    if (!isValidEmail(normalizedEmail)) {
+      setMessageType('error')
+      setMessage('Lütfen geçerli bir e-posta adresi girin.')
+      setLoading(false)
+      return
+    }
+
+    const { error } = await supabase.auth.signInWithPassword({ email: normalizedEmail, password })
     if (error) {
       setMessageType('error')
       setMessage(translateAuthMessage(error.message))
@@ -92,8 +107,17 @@ export default function AuthCard({ initialTab = 'login' }) {
       ? `${window.location.origin}/update-password`
       : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://my-app-pi-bay-aujsz5lm1h.vercel.app'}/update-password`
 
+    const normalizedEmail = normalizeEmail(email)
+
+    if (!isValidEmail(normalizedEmail)) {
+      setMessageType('error')
+      setMessage('Lütfen geçerli bir e-posta adresi girin.')
+      setLoading(false)
+      return
+    }
+
     const { error } = await supabase.auth.signUp({
-      email,
+      email: normalizedEmail,
       password,
       options: { data: { full_name: name }, emailRedirectTo: redirectTo }
     })
@@ -117,7 +141,16 @@ export default function AuthCard({ initialTab = 'login' }) {
       ? `${window.location.origin}/update-password`
       : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://my-app-pi-bay-aujsz5lm1h.vercel.app'}/update-password`
 
-    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo })
+    const normalizedEmail = normalizeEmail(email)
+
+    if (!isValidEmail(normalizedEmail)) {
+      setMessageType('error')
+      setMessage('Lütfen geçerli bir e-posta adresi girin.')
+      setLoading(false)
+      return
+    }
+
+    const { error } = await supabase.auth.resetPasswordForEmail(normalizedEmail, { redirectTo })
     if (error) {
       setMessageType('error')
       setMessage(translateAuthMessage(error.message))
