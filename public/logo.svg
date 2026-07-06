@@ -1,0 +1,24 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="60" cy="60" r="58" fill="#ffffff" stroke="#242424" stroke-width="4"/>
+  <g filter="url(#shadow)">
+    <path d="M60 24C59.72 24 53.08 29.78 47.94 38.76C42.8 47.73 40 57.75 40 68.5C40 90.62 49.63 102 60 102C70.37 102 80 90.62 80 68.5C80 57.75 77.2 47.73 72.06 38.76C66.92 29.78 60.28 24 60 24Z" fill="#FFC72C" stroke="#2A2A2A" stroke-width="4"/>
+    <path d="M60 34V102" stroke="#2A2A2A" stroke-width="4"/>
+    <path d="M60 48H55C52.24 48 50 50.24 50 53V55.5C50 58.26 52.24 60.5 55 60.5H60" stroke="#2A2A2A" stroke-width="4"/>
+    <path d="M60 68H55C52.24 68 50 70.24 50 73V75.5C50 78.26 52.24 80.5 55 80.5H60" stroke="#2A2A2A" stroke-width="4"/>
+    <path d="M60 88H55C52.24 88 50 90.24 50 93V95.5C50 98.26 52.24 100.5 55 100.5H60" stroke="#2A2A2A" stroke-width="4"/>
+    <path d="M60 48H65C67.76 48 70 50.24 70 53V55.5C70 58.26 67.76 60.5 65 60.5H60" stroke="#2A2A2A" stroke-width="4"/>
+    <path d="M60 68H65C67.76 68 70 70.24 70 73V75.5C70 78.26 67.76 80.5 65 80.5H60" stroke="#2A2A2A" stroke-width="4"/>
+    <path d="M60 88H65C67.76 88 70 90.24 70 93V95.5C70 98.26 67.76 100.5 65 100.5H60" stroke="#2A2A2A" stroke-width="4"/>
+  </g>
+  <path d="M35 42C22 35 22 23 32 17C42 11 53 18 58 31" fill="#F6C54C" stroke="#2A2A2A" stroke-width="4"/>
+  <path d="M85 42C98 35 98 23 88 17C78 11 67 18 62 31" fill="#F6C54C" stroke="#2A2A2A" stroke-width="4"/>
+  <path d="M43 39C37 55 47 55 54 48" stroke="#2A2A2A" stroke-width="4"/>
+  <path d="M77 39C83 55 73 55 66 48" stroke="#2A2A2A" stroke-width="4"/>
+  <path d="M51 20C51 17.2386 53.2386 15 56 15C58.7614 15 61 17.2386 61 20C61 22.7614 58.7614 25 56 25C53.2386 25 51 22.7614 51 20Z" fill="#FFC72C" stroke="#2A2A2A" stroke-width="4"/>
+  <path d="M69 20C69 17.2386 71.2386 15 74 15C76.7614 15 79 17.2386 79 20C79 22.7614 76.7614 25 74 25C71.2386 25 69 22.7614 69 20Z" fill="#FFC72C" stroke="#2A2A2A" stroke-width="4"/>
+  <defs>
+    <filter id="shadow" x="26" y="24" width="88" height="88" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000000" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+</svg>
