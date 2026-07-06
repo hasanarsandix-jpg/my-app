@@ -225,10 +225,6 @@ export default function AuthCard({ initialTab = 'login' }) {
           <p style={{ marginTop: '16px', color: messageType === 'error' ? '#dc2626' : '#0f766e', fontSize: '14px', textAlign: 'center' }}>{message}</p>
         ) : null}
 
-        <div style={{ marginTop: '18px', textAlign: 'center', fontSize: '14px', color: '#475569' }}>
-          <Link href="/login" style={{ color: '#2563eb', marginRight: '10px' }}>Giriş Sayfası</Link>
-          <Link href="/signup" style={{ color: '#2563eb' }}>Kayıt Sayfası</Link>
-        </div>
       </div>
     </div>
   )
