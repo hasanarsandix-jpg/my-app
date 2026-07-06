@@ -7,9 +7,13 @@ export default function ForgotPassword() {
 
   const handleResetPassword = async (e) => {
     e.preventDefault()
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'https://my-app-pi-bay-aujsz5lm1h.vercel.app/update-password'
-    })
+
+    const redirectTo =
+      typeof window !== 'undefined'
+        ? `${window.location.origin}/update-password`
+        : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://my-app-pi-bay-aujsz5lm1h.vercel.app'}/update-password`
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo })
     if (error) {
       setMessage('Hata: ' + error.message)
     } else {

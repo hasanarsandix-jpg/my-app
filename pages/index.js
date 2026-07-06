@@ -21,7 +21,12 @@ export default function Home() {
   }
 
   const handleReset = async () => {
-    const { error } = await supabase.auth.resetPasswordForEmail(email)
+    const redirectTo =
+      typeof window !== 'undefined'
+        ? `${window.location.origin}/update-password`
+        : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://my-app-pi-bay-aujsz5lm1h.vercel.app'}/update-password`
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo })
     if (error) alert(error.message)
     else alert('Şifre sıfırlama maili gönderildi!')
   }
