@@ -167,7 +167,7 @@ export default function AuthCard({ initialTab = 'login' }) {
     <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #0f172a 0%, #1d4ed8 50%, #38bdf8 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
       <div style={{ width: '100%', maxWidth: '440px', background: 'rgba(255,255,255,0.96)', borderRadius: '24px', boxShadow: '0 20px 50px rgba(15, 23, 42, 0.3)', padding: '32px' }}>
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-          <img src="/logo.svg" alt="Logo" style={{ width: '72px', height: '72px', marginBottom: '12px' }} />
+          <img src="/upload-logo.png" alt="Logo" style={{ width: '72px', height: '72px', marginBottom: '12px' }} />
           <h1 style={{ margin: '0 0 8px', color: '#0f172a', fontSize: '28px' }}>Hoş Geldiniz</h1>
           <p style={{ margin: 0, color: '#64748b' }}>Giriş yapın, kayıt olun veya şifrenizi yenileyin.</p>
         </div>
