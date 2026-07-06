@@ -6,10 +6,7 @@ export default function SignUp() {
   const [password, setPassword] = useState('')
 
   const handleSignUp = async () => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    })
+    const { error } = await supabase.auth.signUp({ email, password })
     if (error) {
       alert(error.message)
     } else {
