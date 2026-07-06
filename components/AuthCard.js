@@ -29,6 +29,10 @@ const translateAuthMessage = (message = '') => {
   if (normalized.includes('new password should be different')) return 'Yeni şifre eski şifreden farklı olmalıdır.'
   if (normalized.includes('for security purposes')) return 'Güvenlik nedeniyle bu işlemi kısa süre içinde tekrar isteyemezsiniz.'
   if (normalized.includes('email') && normalized.includes('invalid')) return 'Lütfen geçerli bir e-posta adresi girin.'
+  if (normalized.includes('user not found')) return 'Bu e-posta ile kayıtlı bir kullanıcı bulunamadı. Önce kayıt olmanız gerekebilir.'
+  if (normalized.includes('smtp') || normalized.includes('email provider') || normalized.includes('email server')) return 'E-posta servisi şu anda hazır değil. Supabase e-posta ayarlarını kontrol edin.'
+  if (normalized.includes('redirect') || normalized.includes('redirect url')) return 'Yönlendirme URLsi kabul edilmedi. Supabase site URL ayarlarını kontrol edin.'
+  if (normalized.includes('rate limit')) return 'Çok sık deneme yapıldı. Biraz bekleyip tekrar deneyin.'
   if (normalized.includes('missing required parameter')) return 'Zorunlu alanları doldurunuz.'
 
   return 'İşlem sırasında bir sorun oluştu. Lütfen daha sonra tekrar deneyin.'
@@ -156,7 +160,7 @@ export default function AuthCard({ initialTab = 'login' }) {
       setMessage(translateAuthMessage(error.message))
     } else {
       setMessageType('success')
-      setMessage('Şifre sıfırlama bağlantısı e-posta adresinize gönderildi.')
+      setMessage('Şifre sıfırlama bağlantısı e-posta adresinize gönderildi. Eğer mesaj gelmezse spam klasörünü kontrol edin.')
     }
     setLoading(false)
   }
@@ -213,6 +217,9 @@ export default function AuthCard({ initialTab = 'login' }) {
             <button type="submit" disabled={loading} style={buttonStyle}>
               {loading ? 'Gönderiliyor...' : 'Şifre Sıfırlama Bağlantısı Gönder'}
             </button>
+            <p style={{ margin: 0, fontSize: '13px', color: '#64748b', textAlign: 'center' }}>
+              E-posta gelmezse spam klasörünü kontrol edin. Mail gönderimi Supabase ayarlarına bağlı olabilir.
+            </p>
           </form>
         )}
 
