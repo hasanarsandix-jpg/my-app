@@ -14,7 +14,7 @@ const tabStyle = {
   transition: 'all 0.2s ease'
 }
 
-const normalizeEmail = (value = '') => value.trim().toLowerCase()
+const normalizeEmail = (value = '') => value.replace(/\s+/g, '').trim().toLowerCase()
 
 const isValidEmail = (value = '') => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizeEmail(value))
 
@@ -28,10 +28,10 @@ const translateAuthMessage = (message = '') => {
   if (normalized.includes('signup requires')) return 'Kayıt için geçerli bir şifre girmeniz gerekiyor.'
   if (normalized.includes('new password should be different')) return 'Yeni şifre eski şifreden farklı olmalıdır.'
   if (normalized.includes('for security purposes')) return 'Güvenlik nedeniyle bu işlemi kısa süre içinde tekrar isteyemezsiniz.'
-  if (normalized.includes('email is invalid')) return 'Geçersiz e-posta adresi.'
+  if (normalized.includes('email') && normalized.includes('invalid')) return 'Lütfen geçerli bir e-posta adresi girin.'
   if (normalized.includes('missing required parameter')) return 'Zorunlu alanları doldurunuz.'
 
-  return message || 'Bir hata oluştu.'
+  return 'İşlem sırasında bir sorun oluştu. Lütfen daha sonra tekrar deneyin.'
 }
 
 export default function AuthCard({ initialTab = 'login' }) {
@@ -184,8 +184,8 @@ export default function AuthCard({ initialTab = 'login' }) {
 
         {activeTab === 'login' && (
           <form onSubmit={handleLogin} style={{ display: 'grid', gap: '12px' }}>
-            <input type="email" placeholder="E-posta adresiniz" value={email} onChange={(e) => setEmail(e.target.value)} required style={inputStyle} />
-            <input type="password" placeholder="Şifreniz" value={password} onChange={(e) => setPassword(e.target.value)} required style={inputStyle} />
+            <input type="text" placeholder="E-posta adresiniz" value={email} onChange={(e) => setEmail(normalizeEmail(e.target.value))} style={inputStyle} />
+            <input type="password" placeholder="Şifreniz" value={password} onChange={(e) => setPassword(e.target.value)} style={inputStyle} />
             <label style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#475569', fontSize: '14px' }}>
               <input type="checkbox" checked={remember} onChange={() => setRemember(!remember)} />
               Beni hatırla
@@ -199,8 +199,8 @@ export default function AuthCard({ initialTab = 'login' }) {
         {activeTab === 'signup' && (
           <form onSubmit={handleSignUp} style={{ display: 'grid', gap: '12px' }}>
             <input type="text" placeholder="Adınız Soyadınız" value={name} onChange={(e) => setName(e.target.value)} style={inputStyle} />
-            <input type="email" placeholder="E-posta adresiniz" value={email} onChange={(e) => setEmail(e.target.value)} required style={inputStyle} />
-            <input type="password" placeholder="Şifreniz" value={password} onChange={(e) => setPassword(e.target.value)} required style={inputStyle} />
+            <input type="text" placeholder="E-posta adresiniz" value={email} onChange={(e) => setEmail(normalizeEmail(e.target.value))} style={inputStyle} />
+            <input type="password" placeholder="Şifreniz" value={password} onChange={(e) => setPassword(e.target.value)} style={inputStyle} />
             <button type="submit" disabled={loading} style={buttonStyle}>
               {loading ? 'İşleniyor...' : 'Kayıt Ol'}
             </button>
@@ -209,7 +209,7 @@ export default function AuthCard({ initialTab = 'login' }) {
 
         {activeTab === 'forgot' && (
           <form onSubmit={handleReset} style={{ display: 'grid', gap: '12px' }}>
-            <input type="email" placeholder="E-posta adresiniz" value={email} onChange={(e) => setEmail(e.target.value)} required style={inputStyle} />
+            <input type="text" placeholder="E-posta adresiniz" value={email} onChange={(e) => setEmail(normalizeEmail(e.target.value))} style={inputStyle} />
             <button type="submit" disabled={loading} style={buttonStyle}>
               {loading ? 'Gönderiliyor...' : 'Şifre Sıfırlama Bağlantısı Gönder'}
             </button>
