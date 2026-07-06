@@ -16,7 +16,12 @@ const tabStyle = {
 
 const normalizeEmail = (value = '') => value.replace(/\s+/g, '').trim().toLowerCase()
 
-const isValidEmail = (value = '') => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizeEmail(value))
+const isValidEmail = (value = '') => {
+  const normalized = normalizeEmail(value)
+  if (!normalized) return false
+  if (normalized.includes('@') && normalized.includes('.')) return true
+  return false
+}
 
 const translateAuthMessage = (message = '') => {
   const normalized = message.toLowerCase()
