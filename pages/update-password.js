@@ -1,9 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabaseClient'
 
 export default function UpdatePassword() {
   const [newPassword, setNewPassword] = useState('')
   const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    // Mailden gelen token ile session'ı kur
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        console.log('Password recovery mode aktif')
+      }
+    })
+  }, [])
 
   const handleUpdate = async (e) => {
     e.preventDefault()
