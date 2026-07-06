@@ -16,13 +16,6 @@ const tabStyle = {
 
 const normalizeEmail = (value = '') => value.replace(/\s+/g, '').trim().toLowerCase()
 
-const isValidEmail = (value = '') => {
-  const normalized = normalizeEmail(value)
-  if (!normalized) return false
-  if (normalized.includes('@') && normalized.includes('.')) return true
-  return false
-}
-
 const translateAuthMessage = (message = '') => {
   const normalized = message.toLowerCase()
 
@@ -88,9 +81,9 @@ export default function AuthCard({ initialTab = 'login' }) {
 
     const normalizedEmail = normalizeEmail(email)
 
-    if (!isValidEmail(normalizedEmail)) {
+    if (!normalizedEmail) {
       setMessageType('error')
-      setMessage('Lütfen geçerli bir e-posta adresi girin.')
+      setMessage('Lütfen e-posta adresinizi girin.')
       setLoading(false)
       return
     }
@@ -118,9 +111,9 @@ export default function AuthCard({ initialTab = 'login' }) {
 
     const normalizedEmail = normalizeEmail(email)
 
-    if (!isValidEmail(normalizedEmail)) {
+    if (!normalizedEmail) {
       setMessageType('error')
-      setMessage('Lütfen geçerli bir e-posta adresi girin.')
+      setMessage('Lütfen e-posta adresinizi girin.')
       setLoading(false)
       return
     }
@@ -152,9 +145,9 @@ export default function AuthCard({ initialTab = 'login' }) {
 
     const normalizedEmail = normalizeEmail(email)
 
-    if (!isValidEmail(normalizedEmail)) {
+    if (!normalizedEmail) {
       setMessageType('error')
-      setMessage('Lütfen geçerli bir e-posta adresi girin.')
+      setMessage('Lütfen e-posta adresinizi girin.')
       setLoading(false)
       return
     }
