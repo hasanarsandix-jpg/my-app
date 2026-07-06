@@ -105,9 +105,8 @@ export default function AuthCard({ initialTab = 'login' }) {
     setLoading(true)
     setMessage('')
 
-    const redirectTo = typeof window !== 'undefined'
-      ? `${window.location.origin}/update-password`
-      : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://my-app-pi-bay-aujsz5lm1h.vercel.app'}/update-password`
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || (typeof window !== 'undefined' ? window.location.origin : 'https://my-app-pi-bay-aujsz5lm1h.vercel.app')
+    const redirectTo = `${baseUrl}/update-password`
 
     const normalizedEmail = normalizeEmail(email)
 
@@ -139,9 +138,8 @@ export default function AuthCard({ initialTab = 'login' }) {
     setLoading(true)
     setMessage('')
 
-    const redirectTo = typeof window !== 'undefined'
-      ? `${window.location.origin}/update-password`
-      : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://my-app-pi-bay-aujsz5lm1h.vercel.app'}/update-password`
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || (typeof window !== 'undefined' ? window.location.origin : 'https://my-app-pi-bay-aujsz5lm1h.vercel.app')
+    const redirectTo = `${baseUrl}/update-password`
 
     const normalizedEmail = normalizeEmail(email)
 
