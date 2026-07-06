@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { supabase } from '../lib/supabaseClient'
 
 const tabStyle = {
@@ -15,8 +14,23 @@ const tabStyle = {
   transition: 'all 0.2s ease'
 }
 
+const translateAuthMessage = (message = '') => {
+  const normalized = message.toLowerCase()
+
+  if (normalized.includes('invalid login credentials')) return 'E-posta veya şifre hatalı.'
+  if (normalized.includes('email not confirmed')) return 'E-posta adresinizi doğrulamanız gerekiyor.'
+  if (normalized.includes('user already registered')) return 'Bu e-posta adresi zaten kayıtlı.'
+  if (normalized.includes('password should be at least')) return 'Şifre en az 6 karakter olmalıdır.'
+  if (normalized.includes('signup requires')) return 'Kayıt için geçerli bir şifre girmeniz gerekiyor.'
+  if (normalized.includes('new password should be different')) return 'Yeni şifre eski şifreden farklı olmalıdır.'
+  if (normalized.includes('for security purposes')) return 'Güvenlik nedeniyle bu işlemi kısa süre içinde tekrar isteyemezsiniz.'
+  if (normalized.includes('email is invalid')) return 'Geçersiz e-posta adresi.'
+  if (normalized.includes('missing required parameter')) return 'Zorunlu alanları doldurunuz.'
+
+  return message || 'Bir hata oluştu.'
+}
+
 export default function AuthCard({ initialTab = 'login' }) {
-  const router = useRouter()
   const [activeTab, setActiveTab] = useState(initialTab)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -24,6 +38,7 @@ export default function AuthCard({ initialTab = 'login' }) {
   const [remember, setRemember] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
+  const [messageType, setMessageType] = useState('')
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -36,6 +51,7 @@ export default function AuthCard({ initialTab = 'login' }) {
 
   useEffect(() => {
     setMessage('')
+    setMessageType('')
   }, [activeTab])
 
   const saveRememberChoice = (value) => {
@@ -57,9 +73,11 @@ export default function AuthCard({ initialTab = 'login' }) {
 
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) {
-      setMessage(error.message)
+      setMessageType('error')
+      setMessage(translateAuthMessage(error.message))
     } else {
       saveRememberChoice(remember)
+      setMessageType('success')
       setMessage('Giriş başarılı! Hoş geldiniz.')
     }
     setLoading(false)
@@ -81,8 +99,10 @@ export default function AuthCard({ initialTab = 'login' }) {
     })
 
     if (error) {
-      setMessage(error.message)
+      setMessageType('error')
+      setMessage(translateAuthMessage(error.message))
     } else {
+      setMessageType('success')
       setMessage('Kayıt başarılı. Lütfen e-postanızı kontrol edin.')
     }
     setLoading(false)
@@ -99,8 +119,10 @@ export default function AuthCard({ initialTab = 'login' }) {
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo })
     if (error) {
-      setMessage(error.message)
+      setMessageType('error')
+      setMessage(translateAuthMessage(error.message))
     } else {
+      setMessageType('success')
       setMessage('Şifre sıfırlama bağlantısı e-posta adresinize gönderildi.')
     }
     setLoading(false)
@@ -162,7 +184,7 @@ export default function AuthCard({ initialTab = 'login' }) {
         )}
 
         {message ? (
-          <p style={{ marginTop: '16px', color: message.includes('Hata') || message.includes('Error') ? '#dc2626' : '#0f766e', fontSize: '14px', textAlign: 'center' }}>{message}</p>
+          <p style={{ marginTop: '16px', color: messageType === 'error' ? '#dc2626' : '#0f766e', fontSize: '14px', textAlign: 'center' }}>{message}</p>
         ) : null}
 
         <div style={{ marginTop: '18px', textAlign: 'center', fontSize: '14px', color: '#475569' }}>

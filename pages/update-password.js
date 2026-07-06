@@ -6,6 +6,7 @@ export default function UpdatePassword() {
   const router = useRouter()
   const [newPassword, setNewPassword] = useState('')
   const [message, setMessage] = useState('')
+  const [messageType, setMessageType] = useState('')
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -20,16 +21,29 @@ export default function UpdatePassword() {
     }
   }, [])
 
+  const translateAuthMessage = (message = '') => {
+    const normalized = message.toLowerCase()
+
+    if (normalized.includes('password should be at least')) return 'Şifre en az 6 karakter olmalıdır.'
+    if (normalized.includes('new password should be different')) return 'Yeni şifre eski şifreden farklı olmalıdır.'
+    if (normalized.includes('for security purposes')) return 'Güvenlik nedeniyle bu işlemi kısa süre içinde tekrar isteyemezsiniz.'
+
+    return message || 'Bir hata oluştu.'
+  }
+
   const handleUpdate = async (e) => {
     e.preventDefault()
     setLoading(true)
     setMessage('')
+    setMessageType('')
 
     const { error } = await supabase.auth.updateUser({ password: newPassword })
     if (error) {
-      setMessage('Hata: ' + error.message)
+      setMessageType('error')
+      setMessage('Hata: ' + translateAuthMessage(error.message))
       setLoading(false)
     } else {
+      setMessageType('success')
       setMessage('Şifre başarıyla güncellendi! Ana sayfaya yönlendiriliyorsunuz...')
       setTimeout(() => router.push('/'), 1500)
     }
@@ -48,7 +62,7 @@ export default function UpdatePassword() {
         <button type="submit" disabled={loading}>
           {loading ? 'İşleniyor...' : 'Şifreyi Güncelle'}
         </button>
-        <p>{message}</p>
+        <p style={{ color: messageType === 'error' ? '#dc2626' : '#0f766e' }}>{message}</p>
       </form>
     </div>
   )
