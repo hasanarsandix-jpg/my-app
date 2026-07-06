@@ -16,6 +16,14 @@ const tabStyle = {
 
 const normalizeEmail = (value = '') => value.replace(/\s+/g, '').trim().toLowerCase()
 
+const isValidEmail = (value = '') => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+
+const getAppBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL
+  if (typeof window !== 'undefined' && window.location?.origin) return window.location.origin
+  return 'https://my-app-pi-bay-aujsz5lm1h.vercel.app'
+}
+
 const translateAuthMessage = (message = '') => {
   const normalized = message.toLowerCase()
 
@@ -88,6 +96,20 @@ export default function AuthCard({ initialTab = 'login' }) {
       return
     }
 
+    if (!isValidEmail(normalizedEmail)) {
+      setMessageType('error')
+      setMessage('Lütfen geçerli bir e-posta adresi girin.')
+      setLoading(false)
+      return
+    }
+
+    if (!password) {
+      setMessageType('error')
+      setMessage('Lütfen şifrenizi girin.')
+      setLoading(false)
+      return
+    }
+
     const { error } = await supabase.auth.signInWithPassword({ email: normalizedEmail, password })
     if (error) {
       setMessageType('error')
@@ -105,7 +127,7 @@ export default function AuthCard({ initialTab = 'login' }) {
     setLoading(true)
     setMessage('')
 
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || (typeof window !== 'undefined' ? window.location.origin : 'https://my-app-pi-bay-aujsz5lm1h.vercel.app')
+    const baseUrl = getAppBaseUrl()
     const redirectTo = `${baseUrl}/update-password`
 
     const normalizedEmail = normalizeEmail(email)
@@ -113,6 +135,27 @@ export default function AuthCard({ initialTab = 'login' }) {
     if (!normalizedEmail) {
       setMessageType('error')
       setMessage('Lütfen e-posta adresinizi girin.')
+      setLoading(false)
+      return
+    }
+
+    if (!isValidEmail(normalizedEmail)) {
+      setMessageType('error')
+      setMessage('Lütfen geçerli bir e-posta adresi girin.')
+      setLoading(false)
+      return
+    }
+
+    if (!password) {
+      setMessageType('error')
+      setMessage('Lütfen bir şifre belirleyin.')
+      setLoading(false)
+      return
+    }
+
+    if (password.length < 6) {
+      setMessageType('error')
+      setMessage('Şifre en az 6 karakter olmalıdır.')
       setLoading(false)
       return
     }
@@ -138,7 +181,7 @@ export default function AuthCard({ initialTab = 'login' }) {
     setLoading(true)
     setMessage('')
 
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || (typeof window !== 'undefined' ? window.location.origin : 'https://my-app-pi-bay-aujsz5lm1h.vercel.app')
+    const baseUrl = getAppBaseUrl()
     const redirectTo = `${baseUrl}/update-password`
 
     const normalizedEmail = normalizeEmail(email)
@@ -146,6 +189,13 @@ export default function AuthCard({ initialTab = 'login' }) {
     if (!normalizedEmail) {
       setMessageType('error')
       setMessage('Lütfen e-posta adresinizi girin.')
+      setLoading(false)
+      return
+    }
+
+    if (!isValidEmail(normalizedEmail)) {
+      setMessageType('error')
+      setMessage('Lütfen geçerli bir e-posta adresi girin.')
       setLoading(false)
       return
     }
