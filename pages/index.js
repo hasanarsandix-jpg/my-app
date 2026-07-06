@@ -6,6 +6,7 @@ export default function Home() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
+  const [remember, setRemember] = useState(false)
 
   const handleLogin = async () => {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
@@ -37,7 +38,7 @@ export default function Home() {
         padding: '40px',
         borderRadius: '12px',
         boxShadow: '0 8px 20px rgba(0,0,0,0.3)',
-        width: '400px',
+        width: '420px',
         textAlign: 'center'
       }}>
         <h1 style={{ marginBottom: '25px', color: '#1f1c2c' }}>✨ Hoşgeldiniz ✨</h1>
@@ -63,6 +64,10 @@ export default function Home() {
           <div>
             <input type="email" placeholder="Email" style={{ marginBottom: '15px', padding: '12px', width: '100%', borderRadius: '8px' }} onChange={(e)=>setEmail(e.target.value)} />
             <input type="password" placeholder="Password" style={{ marginBottom: '15px', padding: '12px', width: '100%', borderRadius: '8px' }} onChange={(e)=>setPassword(e.target.value)} />
+            <label style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+              <input type="checkbox" checked={remember} onChange={()=>setRemember(!remember)} />
+              <span style={{ marginLeft: '8px' }}>Beni Hatırla</span>
+            </label>
             <button onClick={handleLogin} style={{ background: 'linear-gradient(90deg,#0070f3,#00c6ff)', color:'#fff', padding:'12px', width:'100%', border:'none', borderRadius:'8px', fontWeight:'bold' }}>
               🚀 Giriş Yap
             </button>
