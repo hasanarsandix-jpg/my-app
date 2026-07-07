@@ -1,7 +1,7 @@
 {
-  "name": "My App",
-  "short_name": "MyApp",
-  "description": "Hızlı ve güvenli oturum açma deneyimi",
+  "name": "ARILIĞIM",
+  "short_name": "ARILIĞIM",
+  "description": "Arılık koloni takibi, bakım planları ve mobil odaklı yönetim deneyimi",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

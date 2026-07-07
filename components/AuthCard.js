@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { supabase } from '../lib/supabaseClient'
 
 const tabStyle = {
@@ -45,6 +45,7 @@ const translateAuthMessage = (message = '') => {
 }
 
 export default function AuthCard({ initialTab = 'login' }) {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState(initialTab)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -118,6 +119,7 @@ export default function AuthCard({ initialTab = 'login' }) {
       saveRememberChoice(remember)
       setMessageType('success')
       setMessage('Giriş başarılı! Hoş geldiniz.')
+      router.replace('/login')
     }
     setLoading(false)
   }
