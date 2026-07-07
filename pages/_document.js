@@ -4,9 +4,11 @@ export default function Document() {
   return (
     <Html lang="tr">
       <Head>
+        <title>ARILIĞIM</title>
         <meta name="theme-color" content="#1d4ed8" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="ARILIĞIM" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/lego.png" />
