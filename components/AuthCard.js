@@ -216,8 +216,8 @@ export default function AuthCard({ initialTab = 'login' }) {
       <div style={{ width: '100%', maxWidth: '440px', background: 'rgba(255,255,255,0.96)', borderRadius: '24px', boxShadow: '0 20px 50px rgba(15, 23, 42, 0.3)', padding: '32px' }}>
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <img src="/lego.png" alt="Logo" style={{ width: '72px', height: '72px', marginBottom: '12px' }} />
-          <h1 style={{ margin: '0 0 8px', color: '#0f172a', fontSize: '28px' }}>Hoş Geldiniz</h1>
-          <p style={{ margin: 0, color: '#64748b' }}>Giriş yapın, kayıt olun veya şifrenizi yenileyin.</p>
+          <h1 style={{ margin: '0 0 8px', color: '#0f172a', fontSize: '28px' }}>ARILIĞIM</h1>
+          <p style={{ margin: 0, color: '#64748b' }}>SAĞLIKLI BOL BALLI GÜNLER</p>
         </div>
 
         <div style={{ display: 'flex', gap: '8px', marginBottom: '20px' }}>
